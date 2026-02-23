@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import op1Img from "../assets/copa.png";
 import op2Img from "../assets/camera.png";
@@ -182,7 +182,7 @@ function ConfirmPage({ option, onBack }: { option: typeof OPTIONS[0]; onBack: ()
                 </div>
             </div>
 
-            <a href={`https://wa.me/55SEUNUMERO?text=${option.whatsapp}`}
+            <a href={`https://wa.me/5514981532229?text=${option.whatsapp}`}
                 target="_blank" rel="noopener noreferrer"
                 className="shimmer-btn font-outfit font-semibold uppercase tracking-widest text-white px-10 py-4 rounded-2xl shadow-xl transition-transform hover:scale-105 active:scale-95"
                 style={{
@@ -326,6 +326,83 @@ function DateCard({ option, index, onClick }: { option: typeof OPTIONS[0]; index
     );
 }
 
+// ── Rabbit ───────────────────────────────────────────────
+function Rabbit() {
+    const [pos, setPos] = useState(-40);
+    const [goingRight, setGoingRight] = useState(true);
+    const [frame, setFrame] = useState(0);
+    const dirRef = useRef(1);
+    const posRef = useRef(-40);
+
+    useEffect(() => {
+        const move = setInterval(() => {
+            posRef.current += 1.4 * dirRef.current;
+            if (posRef.current > window.innerWidth + 10) dirRef.current = -1;
+            if (posRef.current < -40) dirRef.current = 1;
+            setGoingRight(dirRef.current === 1);
+            setPos(posRef.current);
+        }, 16);
+
+        const animate = setInterval(() => {
+            setFrame((f) => (f + 1) % 4);
+        }, 140);
+
+        return () => { clearInterval(move); clearInterval(animate); };
+    }, []);
+
+    // 4-frame pixel art rabbit legs based on frame
+    const legs = [
+        // frame 0 — neutral
+        <><rect x="2" y="13" width="2" height="2" fill="#f5f0ee" /><rect x="6" y="13" width="2" height="2" fill="#f5f0ee" /><rect x="2" y="14" width="3" height="1" fill="#e8d0d0" /><rect x="6" y="14" width="3" height="1" fill="#e8d0d0" /></>,
+        // frame 1 — step right
+        <><rect x="3" y="13" width="2" height="2" fill="#f5f0ee" /><rect x="7" y="12" width="2" height="3" fill="#f5f0ee" /><rect x="3" y="14" width="3" height="1" fill="#e8d0d0" /><rect x="7" y="14" width="3" height="1" fill="#e8d0d0" /></>,
+        // frame 2 — mid
+        <><rect x="2" y="12" width="2" height="3" fill="#f5f0ee" /><rect x="6" y="13" width="2" height="2" fill="#f5f0ee" /><rect x="2" y="14" width="3" height="1" fill="#e8d0d0" /><rect x="6" y="14" width="3" height="1" fill="#e8d0d0" /></>,
+        // frame 3 — step left
+        <><rect x="1" y="12" width="2" height="3" fill="#f5f0ee" /><rect x="5" y="13" width="2" height="2" fill="#f5f0ee" /><rect x="1" y="14" width="3" height="1" fill="#e8d0d0" /><rect x="5" y="14" width="3" height="1" fill="#e8d0d0" /></>,
+    ];
+
+    return (
+        <div style={{
+            position: "fixed",
+            bottom: 12,
+            left: pos,
+            zIndex: 200,
+            transform: goingRight ? "scaleX(1)" : "scaleX(-1)",
+            imageRendering: "pixelated",
+            pointerEvents: "none",
+            transition: "none",
+        }}>
+            <svg width="40" height="40" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                style={{ imageRendering: "pixelated" }}>
+                {/* Ears */}
+                <rect x="3" y="0" width="2" height="5" fill="#f0d8d8" />
+                <rect x="4" y="1" width="1" height="3" fill="#e8a8a8" />
+                <rect x="7" y="0" width="2" height="4" fill="#f0d8d8" />
+                <rect x="8" y="1" width="1" height="2" fill="#e8a8a8" />
+                {/* Head */}
+                <rect x="2" y="4" width="8" height="6" fill="#f8f4f2" />
+                {/* Eye */}
+                <rect x="8" y="6" width="1" height="1" fill="#cc3366" />
+                {/* Cheek */}
+                <rect x="7" y="8" width="2" height="1" fill="#f0c0c0" />
+                {/* Nose */}
+                <rect x="9" y="7" width="1" height="1" fill="#e8a8a8" />
+                {/* Mouth */}
+                <rect x="9" y="8" width="1" height="1" fill="#d08080" />
+                {/* Body */}
+                <rect x="1" y="9" width="9" height="5" fill="#f8f4f2" />
+                {/* Belly */}
+                <rect x="3" y="10" width="5" height="3" fill="#fff8f6" />
+                {/* Tail */}
+                <rect x="0" y="9" width="2" height="2" fill="#ffffff" />
+                {/* Animated legs */}
+                {legs[frame]}
+            </svg>
+        </div>
+    );
+}
+
 // ── Main Page ────────────────────────────────────────────
 export default function DatePicker() {
     const [expanded, setExpanded] = useState<number | null>(null);
@@ -366,6 +443,8 @@ export default function DatePicker() {
                     onChoose={() => { setExpanded(null); setChosen(expandedOption.id); }}
                 />
             )}
+
+            <Rabbit />
         </div>
     );
 }
