@@ -31,7 +31,7 @@ const OPTIONS = [
         nome: "Fotos + Karaoke",
         img: op2Img,
         descricao:
-            "Andar pela cidade tirando fotos de pessoas e coisas aleatórias, ou de nozes em lugares bonitos / cantando (karaoke improvisado)",
+            "Andar pela cidade tirando fotos de pessoas e coisas aleatórias, ou de nozes em lugares bonitos / cantar (karaoke improvisado, na última saída eu não sabia a letra daquelas músicas ;-;)",
         detalhes: [
             { icon: "📍", text: "Qualquer um" },
             { icon: "🕗", text: "20:30 – Só Deus sabe também" }
@@ -47,10 +47,10 @@ const OPTIONS = [
         nome: "???",
         img: op3Img,
         descricao:
-            "No momento as minhas ideias de coisas não repetidas acabaram ://. Estou aceitando sugestões",
+            "Se você tiver sugestões de coisas que podemos fazer e que você curte, sinta-se à vontade para me falar. Topo tudo!",
         detalhes: [
-            { icon: "📍", text: "A revelar" },
-            { icon: "🕗", text: "A combinar" }
+            { icon: "📍", text: "Relativo" },
+            { icon: "🕗", text: "Relativo" }
         ],
         whatsapp: encodeURIComponent("Oia só, minha sugestão é essa aqui: "),
         accent: "#7ec8c8",

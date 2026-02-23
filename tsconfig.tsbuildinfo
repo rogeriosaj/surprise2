@@ -1,1 +1,1 @@
-{"root":["./src/main.tsx","./src/components/DatePicker.tsx"],"errors":true,"version":"5.9.3"}
+{"root":["./src/main.tsx","./src/vite-env.d.ts","./src/components/DatePicker.tsx"],"version":"5.9.3"}
